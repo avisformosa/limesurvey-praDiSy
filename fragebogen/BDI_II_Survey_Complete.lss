@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<document type="Survey" version="3.15.5">
+  <LimeSurveyDoc>
+    <Survey>
+      <title>Beck-Depressions-Inventar II (BDI-II)</title>
+      <language>de</language>
+      <groups>
+        <group>
+          <group_name>BDI-II Fragen</group_name>
+          <description>Diese Gruppe enthält die Fragen des BDI-II Fragebogens.</description>
+          <question>
+            <title>Q1</title>
+            <question_text>Traurigkeit</question_text>
+            <type>M</type>
+            <answers>
+              <answer>
+                <code>0</code>
+                <answer_text>Ich bin nicht traurig</answer_text>
+              </answer>
+              <answer>
+                <code>1</code>
+                <answer_text>Ich bin oft traurig</answer_text>
+              </answer>
+              <answer>
+                <code>2</code>
+                <answer_text>Ich bin ständig traurig</answer_text>
+              </answer>
+              <answer>
+                <code>3</code>
+                <answer_text>Ich bin so traurig oder unglücklich, dass ich es nicht aushalte</answer_text>
+              </answer>
+            </answers>
+          </question>
+          <question>
+            <title>Q2</title>
+            <question_text>Pessimismus</question_text>
+            <type>M</type>
+            <answers>
+              <answer>
+                <code>0</code>
+                <answer_text>Ich sehe nicht mutlos in die Zukunft</answer_text>
+              </answer>
+              <answer>
+                <code>1</code>
+                <answer_text>Ich sehe mutloser in die Zukunft als sonst</answer_text>
+              </answer>
+              <answer>
+                <code>2</code>
+                <answer_text>Ich bin mutlos und erwarte nicht, dass meine Situation besser wird</answer_text>
+              </answer>
+              <answer>
+                <code>3</code>
+                <answer_text>Ich glaube, dass meine Zukunft hoffnungslos ist und nur noch schlechter wird</answer_text>
+              </answer>
+            </answers>
+          </question>
+          <question>
+            <title>Q3</title>
+            <question_text>Versagensgefühle</question_text>
+            <type>M</type>
+            <answers>
+              <answer>
+                <code>0</code>
+                <answer_text>Ich fühle mich nicht als Versager</answer_text>
+              </answer>
+              <answer>
+                <code>1</code>
+                <answer_text>Ich habe häufiger Versagensgefühle</answer_text>
+              </answer>
+              <answer>
+                <code>2</code>
+                <answer_text>Wenn ich zurückblicke, sehe ich eine Menge Fehlschläge</answer_text>
+              </answer>
+              <answer>
+                <code>3</code>
+                <answer_text>Ich habe das Gefühl, als Mensch ein völliger Versager zu sein</answer_text>
+              </answer>
+            </answers>
+          </question>
+        </group>
+      </groups>
+    </Survey>
+  </LimeSurveyDoc>
+</document>
