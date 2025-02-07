@@ -273,7 +273,9 @@ function populateDatabase($oDB)
         ), $options);
 
         $oDB->createCommand()->createIndex('{{idx_participant_attribute_names}}', '{{participant_attribute_names}}', ['attribute_id', 'attribute_type']);
-        $aCoreAttributes = array('firstname', 'lastname', 'email');
+        // OUTCOMMENTED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+        // $aCoreAttributes = array('firstname', 'lastname', 'email');
+        $aCoreAttributes = array();
 
         // load sodium library
         $sodium = Yii::app()->sodium;

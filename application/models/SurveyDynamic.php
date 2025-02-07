@@ -19,6 +19,9 @@ class SurveyDynamic extends LSActiveRecord
     public $completed_filter;
     /** @var string $firstname_filter */
     public $firstname_filter;
+    // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+    /** @var string $participant_id_filter */
+    public $participant_id_filter;
     /** @var string $lastname_filter */
     public $lastname_filter;
     /** @var string $email_filter */
@@ -603,6 +606,68 @@ class SurveyDynamic extends LSActiveRecord
         }
     }
 
+    // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+    // NOTE: Heavy on the debugging log side needs to be cleaned up in future
+    /**
+     * @return string
+     */
+
+    public function getParticipantIDForGrid()
+    {
+        // Yii::log(CVarDumper::dumpAsString("we were called getParticipantIDForGrid"), CLogger::LEVEL_INFO, 'application'); // works!
+        // Last name is already decrypted in getFirstNameForGrid method, if we do it again it would try to decrypt it again ( and fail )
+        $tokens = $this->tokens;
+        // Yii::log(CVarDumper::dumpAsString($tokens), CLogger::LEVEL_INFO, 'application'); 
+        // Yii::log(CVarDumper::dumpAsString("we were called getParticipantIDForGrid"), CLogger::LEVEL_INFO, 'application'); // works!
+        if (is_object($tokens)) {
+            //return $tokens->lastname;
+            if (isset($tokens->participant_id)) {
+                // Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantIDForGrid): " . $tokens->participant_id), CLogger::LEVEL_INFO, 'application');
+                return $tokens->participant_id;
+            } else {
+                // Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantIDForGrid) not found in tokens"), CLogger::LEVEL_INFO, 'application');
+                return "Participant ID not available";
+            }
+        }
+        // django0_ADDED
+        //Yii::log(CVarDumper::dumpAsString("RUMBA RUMBA RUMBA"), CLogger::LEVEL_INFO, 'application');
+    }
+    
+    // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+    // NOTE: Heavy on the debugging log side needs to be cleaned up in future
+    public function getParticipantID()
+    {
+        $tokens = $this->tokens;
+
+        //Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantID): " . $tokens->participant_id), CLogger::LEVEL_INFO, 'application');
+        //P Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantID) tokens: " . $tokens), CLogger::LEVEL_INFO, 'application');
+        // decrypt token information ( if needed )
+        if (is_object($tokens)) {
+            if (!empty($tokens)) {
+                $tokens->decrypt();
+            }
+            //P Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantID): " . $tokens->participant_id), CLogger::LEVEL_INFO, 'application');
+            return $tokens->participant_id;
+        }else {
+            //P Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantID) not found in tokens"), CLogger::LEVEL_INFO, 'application');
+            return "Participant ID not available";
+        }
+
+        // if (is_object($tokens)) {
+        //         //return $tokens->lastname;
+        //         if (isset($tokens->participant_id)) {
+        //             // django0_ADDED 
+        //             // Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantID): " . $tokens->participant_id), CLogger::LEVEL_INFO, 'application');
+        //             return $tokens->participant_id;
+        //         } else {
+        //             // django0_ADDED 
+        //             // Yii::log(CVarDumper::dumpAsString("Participant ID (call getParticipantID) not found in tokens"), CLogger::LEVEL_INFO, 'application');
+        //             return "Participant ID not available";
+        //         }
+        //     }  
+        return "ERROR";
+    }
+
     /**
      * @return string
      */
@@ -635,7 +700,9 @@ class SurveyDynamic extends LSActiveRecord
      */
     public function getDefaultColumns()
     {
-        return array('id', 'token', 'submitdate', 'lastpage', 'startlanguage', 'completed', 'seed');
+        // ADDED|OUTCOMMENTED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+        //return array('id', 'token', 'submitdate', 'lastpage', 'startlanguage', 'completed', 'seed');
+        return array('id', 'participant_id', 'token', 'submitdate', 'lastpage', 'startlanguage', 'completed', 'seed');
     }
 
     /**
@@ -727,6 +794,8 @@ class SurveyDynamic extends LSActiveRecord
         $criteria->compare('t.token', $this->token, true);
         $criteria->join = "LEFT JOIN {{tokens_" . self::$sid . "}} as tokens ON t.token = tokens.token";
         $criteria->compare('tokens.firstname', $this->firstname_filter, true);
+        // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+        $criteria->compare('tokens.participant_id', $this->participant_id_filter, true); 
         $criteria->compare('tokens.lastname', $this->lastname_filter, true);
         $criteria->compare('tokens.email', $this->email_filter, true);
 
@@ -735,6 +804,11 @@ class SurveyDynamic extends LSActiveRecord
             'tokens.firstname' => array(
                 'asc' => 'tokens.firstname ASC',
                 'desc' => 'tokens.firstname DESC',
+            ),
+            // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+            'tokens.participant_id' => array(
+                'asc' => 'tokens.participant_id ASC',
+                'desc' => 'tokens.participant_id DESC',
             ),
             'tokens.lastname' => array(
                 'asc' => 'lastname ASC',

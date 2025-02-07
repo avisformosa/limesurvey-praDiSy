@@ -4,8 +4,8 @@
             <a class="logo-alt-1" href="/">&nbsp;</a>
         </div>
         <div class="box-pattern">
-            <div class="decor-1">&nbsp;</div>
-            <div class="decor-2">&nbsp;</div>
+            <!--<div class="decor-1">&nbsp;</div>
+            <div class="decor-2">&nbsp;</div>-->
         </div>
     </div>
 </div>

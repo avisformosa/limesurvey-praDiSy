@@ -32,6 +32,13 @@ Yii::app()->getController()->renderPartial(
              'class' => '',
              'required' => 'required'
         );
+        // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+        echo "<label class='form-label'>";
+        echo gT('Es wird ein Teilnehmer/Patient mit der folgenden ID hinzugefügt:');
+        echo "</label>";
+        echo "<div>";
+        echo $form->textField($model, 'participant_id', ['value' => $model->genUuid(), 'readonly' => false, 'class' => 'form-control']);
+        echo "</div>";
     ?>
         <div class='mb-3'>
             <label class='form-label '>

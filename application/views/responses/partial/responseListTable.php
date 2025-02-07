@@ -109,6 +109,23 @@ echo viewHelper::getViewTestTag('surveyResponsesBrowse');
             ]
         ];
 
+        // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+        // NOTE: It's unclear if the filters are set correctly here. Yet works so far - needs some review.  
+        // firstname_filter -> participant_id_filter
+        if (!isset($filteredColumns) || in_array('participant_id', $filteredColumns)) {
+            $aColumns[] = [
+                'header' => gT("Participant ID"),
+                'name'   => 'tokens.participant_id',
+                'id'     => 'participant_id',
+                'value'  => '$data->participantIDForGrid',
+                'filter' => TbHtml::textField(
+                    'SurveyDynamic[participant_id_filter]',
+                    $model->participant_id_filter
+                )
+            ];
+        }
+        $filterableColumns['participant_id'] = gT("Participant ID");
+
         if (!isset($filteredColumns) || in_array('lastpage', $filteredColumns)) {
             $aColumns[] = [
                 'header' => 'lastpage',
@@ -150,46 +167,47 @@ echo viewHelper::getViewTestTag('surveyResponsesBrowse');
             }
             $filterableColumns['token'] = 'token';
 
-            if (!isset($filteredColumns) || in_array('firstname', $filteredColumns)) {
-                $aColumns[] = [
-                    'header' => gT("First name"),
-                    'name'   => 'tokens.firstname',
-                    'id'     => 'firstname',
-                    'value'  => '$data->firstNameForGrid',
-                    'filter' => TbHtml::textField(
-                        'SurveyDynamic[firstname_filter]',
-                        $model->firstname_filter
-                    )
-                ];
-            }
-            $filterableColumns['firstname'] = gT("First name");
+            // OUTCOMMENTED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+            // if (!isset($filteredColumns) || in_array('firstname', $filteredColumns)) {
+            //     $aColumns[] = [
+            //         'header' => gT("First name"),
+            //         'name'   => 'tokens.firstname',
+            //         'id'     => 'firstname',
+            //         'value'  => '$data->firstNameForGrid',
+            //         'filter' => TbHtml::textField(
+            //             'SurveyDynamic[firstname_filter]',
+            //             $model->firstname_filter
+            //         )
+            //     ];
+            // }
+            // $filterableColumns['firstname'] = gT("First name");
 
-            if (!isset($filteredColumns) || in_array('lastname', $filteredColumns)) {
-                $aColumns[] = [
-                    'header' => gT("Last name"),
-                    'name'   => 'tokens.lastname',
-                    'id'     => 'lastname',
-                    'value'  => '$data->lastNameForGrid',
-                    'filter' => TbHtml::textField(
-                        'SurveyDynamic[lastname_filter]',
-                        $model->lastname_filter
-                    )
-                ];
-            }
-            $filterableColumns['lastname'] = gT("Last name");
+            // if (!isset($filteredColumns) || in_array('lastname', $filteredColumns)) {
+            //     $aColumns[] = [
+            //         'header' => gT("Last name"),
+            //         'name'   => 'tokens.lastname',
+            //         'id'     => 'lastname',
+            //         'value'  => '$data->lastNameForGrid',
+            //         'filter' => TbHtml::textField(
+            //             'SurveyDynamic[lastname_filter]',
+            //             $model->lastname_filter
+            //         )
+            //     ];
+            // }
+            // $filterableColumns['lastname'] = gT("Last name");
 
-            if (!isset($filteredColumns) || in_array('email', $filteredColumns)) {
-                $aColumns[] = [
-                    'header' => gT("Email"),
-                    'name'   => 'tokens.email',
-                    'id'     => 'email',
-                    'filter' => TbHtml::textField(
-                        'SurveyDynamic[email_filter]',
-                        $model->email_filter
-                    )
-                ];
-            }
-            $filterableColumns['email'] = gT("Email");
+            // if (!isset($filteredColumns) || in_array('email', $filteredColumns)) {
+            //     $aColumns[] = [
+            //         'header' => gT("Email"),
+            //         'name'   => 'tokens.email',
+            //         'id'     => 'email',
+            //         'filter' => TbHtml::textField(
+            //             'SurveyDynamic[email_filter]',
+            //             $model->email_filter
+            //         )
+            //     ];
+            // }
+            // $filterableColumns['email'] = gT("Email");
         }
 
         if (!isset($filteredColumns) || in_array('startlanguage', $filteredColumns)) {

@@ -141,6 +141,19 @@ $internalConfig = array(
             'rules' => require('routes.php'),
             'showScriptName' => true,
         ),
+        // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: DEBUGGING
+        'log'=>array(
+			'class'=>'CLogRouter',
+			'routes'=>array(
+				array(
+					'class'=>'CFileLogRoute',
+					'levels'=>'error, warning, info', // Add "info" if you want to log info level messages
+					'logFile'=>'application.log', // This defines the log file name
+					'logPath'=>dirname(__FILE__).'/../logs', // This defines the log path
+				),
+				// other routes
+			),
+		),
         // These are defaults and are later overwritten in LSYii_Application by a path based on config tempdir/tempurl
         'assetManager' => array(
             'excludeFiles' => array("config.xml", "node_modules", "src"),

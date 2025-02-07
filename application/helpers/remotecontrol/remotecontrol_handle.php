@@ -4,6 +4,11 @@
 * This class handles all methods of the RemoteControl 2 API
 */
 
+// TODO on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+// Access code generation must be implemented
+//                # $newtoken = Token::model($iSurveyId)->generateTokens($iSurveyId);
+//                # $newtokencount = $newtoken['0'];    
+
 use LimeSurvey\PluginManager\PluginEvent;
 
 class remotecontrol_handle
@@ -2412,6 +2417,8 @@ class remotecontrol_handle
                         'tid' => $token->primarykey,
                         'token' => $token->attributes['token'],
                         'participant_info' => array(
+                            // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+                            'participant_id' => $token->attributes['participant_id'],
                             'firstname' => $token->attributes['firstname'],
                             'lastname' => $token->attributes['lastname'],
                             'email' => $token->attributes['email'],

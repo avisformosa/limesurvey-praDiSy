@@ -738,8 +738,27 @@ class ParticipantsAction extends SurveyCommonAction
     public function addParticipant($aData, array $extraAttributes = array())
     {
         if (Permission::model()->hasGlobalPermission('participantpanel', 'create')) {
-            $uuid = Participant::genUuid();
-            $aData['participant_id'] = $uuid;
+            
+            // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+            // NOTE: changed     //$uuid = Participant::genUuid(); and //$aData['participant_id'] = $uuid;
+            // to the following block:    
+            $existingParticipant = Participant::model()->findByAttributes(['participant_id' => $aData['participant_id']]);
+            if ($existingParticipant) {
+                $this->ajaxHelper::outputError('Could not add new participant: ',true);
+                return;  // Abbruch, um keinen doppelten Eintrag zu erzeugen
+            }
+            if (empty($aData['participant_id'])) {
+                $uuid = Participant::genUuid();
+                $aData['participant_id'] = $uuid;
+                // django0_ADDED?
+                // Yii::log(CVarDumper::dumpAsString("new genrated"), CLogger::LEVEL_INFO, 'application');
+            } else {
+                $uuid = $aData['participant_id'];
+                // django0_ADDED?
+                // Yii::log(CVarDumper::dumpAsString("old value"), CLogger::LEVEL_INFO, 'application');
+            }
+            //$uuid = Participant::genUuid();
+            //$aData['participant_id'] = $uuid;
             $aData['owner_uid'] = Yii::app()->user->id;
             $aData['created_by'] = Yii::app()->user->id;
 

@@ -326,6 +326,12 @@ class Participant extends LSActiveRecord
                 'headerHtmlOptions' => ['class' => 'ls-sticky-column'],
                 'htmlOptions'       => ['class' => 'ls-sticky-column'],
             ],
+            // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+            [
+                "name" => 'participant_id',
+            ],
+            // OUTCOMMENTED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+            /*
             [
                 "name" => 'lastname',
             ],
@@ -335,6 +341,7 @@ class Participant extends LSActiveRecord
             [
                 "name" => 'email',
             ],
+            */
             [
                 "name"   => 'language',
                 "value"  => 'getLanguageNameFromCode($data->language, false)',

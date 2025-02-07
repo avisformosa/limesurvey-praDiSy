@@ -632,6 +632,16 @@ class TokenDynamic extends LSActiveRecord
                 'headerHtmlOptions' => ['class' => ''],
                 'htmlOptions'       => ['class' => ' text-end'],
             ],
+            // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+            [
+                'header'            => gT('Participant ID') . $this->setEncryptedAttributeLabel(self::$sid, 'Token', 'participant_id'),
+                'name'              => 'participant_id',
+                'value'             => '$data->participant_id',
+                'headerHtmlOptions' => ['class' => ''],
+                'htmlOptions'       => ['class' => ' name'],
+            ],
+            // OUTCOMMENTED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+            /*        
             [
                 'header'            => gT('First name') . $this->setEncryptedAttributeLabel(self::$sid, 'Token', 'firstname'),
                 'name'              => 'firstname',
@@ -662,6 +672,7 @@ class TokenDynamic extends LSActiveRecord
                 'headerHtmlOptions' => ['class' => ''],
                 'htmlOptions'       => ['class' => ''],
             ],
+            */
             [
                 'header'            => gT('Access code'),
                 'name'              => 'token',
@@ -676,6 +687,8 @@ class TokenDynamic extends LSActiveRecord
                 'headerHtmlOptions' => ['class' => ''],
                 'htmlOptions'       => ['class' => ''],
             ],
+            // COMMENTED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+            /*    
             [
                 'header'            => gT('Invitation sent?'),
                 'name'              => 'sent',
@@ -699,6 +712,7 @@ class TokenDynamic extends LSActiveRecord
                 'headerHtmlOptions' => ['class' => ''],
                 'htmlOptions'       => ['class' => ' text-end'],
             ],
+            */
             [
                 'header'            => gT('Completed?'),
                 'name'              => 'completed',

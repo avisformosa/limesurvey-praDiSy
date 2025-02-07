@@ -1323,6 +1323,14 @@ function createFieldMap($survey, $style = 'short', $force_refresh = false, $ques
         $fieldmap["id"]['group_name'] = "";
     }
 
+    // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy: 
+    $fieldmap["participant_id"] = array("fieldname" => "participant_id", 'sid' => $surveyid, 'type' => "participant_id", "gid" => "", "qid" => "", "aid" => "");
+    if ($style == "full") {
+        $fieldmap["participant_id"]['title'] = "";
+        $fieldmap["participant_id"]['question'] = gT("Participant ID");
+        $fieldmap["participant_id"]['group_name'] = "";
+    }
+
     $fieldmap["submitdate"] = array("fieldname" => "submitdate", 'type' => "submitdate", 'sid' => $surveyid, "gid" => "", "qid" => "", "aid" => "");
     if ($style == "full") {
         $fieldmap["submitdate"]['title'] = "";

@@ -38,6 +38,7 @@ echo viewHelper::getViewTestTag('surveyResponsesBrowse');
                 'partial/responseListTable',
                 [
                     'surveyid' => $surveyid,
+                    'participant_id' => $participant_id, // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
                     'dateformatdetails' => $dateformatdetails,
                     'model' => $model,
                     'bHaveToken' => $bHaveToken,

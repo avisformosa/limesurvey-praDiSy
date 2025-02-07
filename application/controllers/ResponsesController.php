@@ -185,6 +185,7 @@ class ResponsesController extends LSBaseController
         //add token to top of list if survey is not private
         if ($bHaveToken) {
             $fnames[] = ["token", gT("Access code"), 'code' => 'token'];
+            $fnames[] = ["participant_id", gT("Participant ID"), 'code' => 'participant_id']; // ADDED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy 
             $fnames[] = ["firstname", gT("First name"), 'code' => 'firstname']; // or token:firstname ?
             $fnames[] = ["lastname", gT("Last name"), 'code' => 'lastname'];
             $fnames[] = ["email", gT("Email"), 'code' => 'email'];

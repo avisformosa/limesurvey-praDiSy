@@ -36,7 +36,10 @@ class Update_406 extends DatabaseUpdateBase
         \alterColumn('{{participants}}', 'lastname', "text");
         $this->db->createCommand()->addColumn('{{participant_attribute_names}}', 'encrypted', "string(5) NOT NULL DEFAULT ''");
         $this->db->createCommand()->addColumn('{{participant_attribute_names}}', 'core_attribute', "string(5) NOT NULL DEFAULT ''");
-        $aCoreAttributes = array('firstname', 'lastname', 'email');
+        // OUTCOMMENTED on 2025-02-07 by avisformosa (https://github.com/avisformosa) - Project PraDiSy
+        // NOTE Maybe it would be a good idea to have a core attributes incorporate participant_id?
+        // $aCoreAttributes = array('participant_id');
+        //$aCoreAttributes = array('firstname', 'lastname', 'email');
         foreach ($aCoreAttributes as $attribute) {
             $this->db->createCommand()->insert(
                 '{{participant_attribute_names}}',
