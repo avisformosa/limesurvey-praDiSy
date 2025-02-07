@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <metadata>
+        <name>PraDiSyAfterAction</name>
+        <type>plugin</type>
+        <creationDate>2024-09-21</creationDate>
+        <last_update>2024-09-21</last_update>
+        <author>André Ziervogel (avis_formosa)</author>
+        <authorUrl>https://gnupsi.com</authorUrl>
+        <version>1.0.0</version>
+        <license>GNU General Public License version 2 or later</license>
+        <description><![CDATA[Part of the PraDiSy. Post Completion Actions like automatically sends an email to the server after a survey is completed, including participant and survey details.]]></description>
+    </metadata>
+
+    <compatibility>
+        <version>5.0</version>
+        <version>6.0</version>
+    </compatibility>
+
+    <updaters disabled="disabled">
+    </updaters>
+</config>
