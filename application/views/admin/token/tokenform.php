@@ -7,16 +7,12 @@ $locale = convertLStoDateTimePickerLocale(Yii::app()->session['adminlang']);
 ?>
 <div class='<?= (!isset($ajax) || $ajax = false) ? 'col-12 side-body' : ''?>'>
     <?php if (!isset($ajax) || $ajax = false) { ?>
-        <h3>
-            <?php
-
-            if ($token_subaction == "edit") {
-                eT("Edit survey participant");
-            } else {
-                eT("Add survey participant");
-            }
-            ?>
-        </h3>
+    <?php if ($token_subaction == "edit"): ?>
+    <h3><?php echo eT("Edit survey participant"); ?></h3>
+    <?php else: ?>
+    <h3><?php echo eT("Add survey participant"); ?></h3>
+    <p style="color:red; font-size:32px;"><?php echo eT("Bitte hier keine Teilnehmer hinzufügen! CPDB nutzen!"); ?></p>
+    <?php endif; ?>
     <?php } ?>
     <?php
     foreach ($tokendata as $Key => $Value) {
