@@ -1,0 +1,40 @@
+\documentclass{article}
+
+% Seitenränder festlegen
+\usepackage[a4paper,
+  left=25mm,      % Linker Rand: 25mm
+  top=25mm,       % Oberer Rand: 25mm
+  bottom=25mm,    % Unterer Rand: 25mm
+  right=50mm      % Rechter Rand: 50mm (5cm)
+]{geometry}
+
+% Pakete für den Hintergrund und Farben
+\usepackage{background}
+\usepackage{xcolor}
+
+% Schriftart festlegen (optional, zur besseren Sichtbarkeit weggelassen)
+% \usepackage{fontspec}
+% \setmainfont{Open Sans}
+
+% Fix für \tightlist (Pandoc-Standard)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% Definieren der roten Linie im Hintergrund
+\SetBgScale{1}
+\SetBgOpacity{1}
+\SetBgAngle{0}
+\SetBgColor{red}
+\SetBgPosition{current page.north west}
+\SetBgVshift{-25mm}      % Verschiebung nach unten um den oberen Rand
+\SetBgHshift{160mm}      % 25mm (linker Rand) + 135mm (Textbreite) = 160mm
+\SetBgContents{\rule{3pt}{\textheight}}  % 3pt breite Linie über die Texthöhe
+
+\begin{document}
+
+\section*{Test der roten Linie}
+
+Dies ist ein Testdokument, um zu überprüfen, ob die rote Linie am rechten Rand korrekt angezeigt wird.
+
+\end{document}

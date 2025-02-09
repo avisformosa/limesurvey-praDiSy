@@ -1,0 +1,132 @@
+\documentclass{article}
+
+% 1) Seitenränder festlegen mit geometry
+\usepackage[a4paper,
+  left=25mm,      % Linker Rand: 25mm
+  top=25mm,       % Oberer Rand: 25mm
+  bottom=25mm,    % Unterer Rand: 25mm
+  right=50mm      % Rechter Rand: 50mm (5cm)
+]{geometry}
+
+% 2) Pakete für das Einfügen von Inhalten in die Seitenränder
+\usepackage{eso-pic}    % Ermöglicht das Hinzufügen von Inhalten auf jeder Seite
+\usepackage{xcolor}     % Farbanpassungen
+\usepackage{tikz}       % Zeichnen von Grafiken und Platzieren von Text
+\usetikzlibrary{shapes.geometric, shadows,calc}
+\usepackage{graphicx}   % Einfügen von Bildern (z.B. Logos)
+
+% 3) Fix für \tightlist (Pandoc-Standard)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% % Dynamische Berechnung der Bildgröße
+% \newsavebox{\logoBox}  % Box für das Logo
+% \newlength{\logoWidth} % Breite des Logos
+% \newlength{\logoHeight} % Höhe des Logos
+
+% \AtBeginDocument{%
+%   % Speichere das Logo in der Box
+%   \sbox{\logoBox}{\includegraphics[width=40mm]{praxis_logo.pdf}}
+%   % Extrahiere die Maße
+%   \setlength{\logoWidth}{\wd\logoBox}
+%   \setlength{\logoHeight}{\ht\logoBox}
+% }
+
+% Dynamische Berechnung der Bildgröße
+\newsavebox{\logoBox}  % Box für das Logo
+\newlength{\logoWidth} % Breite des Logos
+\newlength{\logoHeight} % Höhe des Logos
+
+\AtBeginDocument{%
+  % Speichere das Logo in der Box
+  \sbox{\logoBox}{\includegraphics[width=40mm]{praxis_logo.pdf}}
+  % Extrahiere die Maße
+  \setlength{\logoWidth}{\wd\logoBox}
+  \setlength{\logoHeight}{\ht\logoBox}
+}
+
+% 4) Schriftart festlegen (Open Sans)
+\usepackage{fontspec}
+\setmainfont{Open Sans} % Stellen Sie sicher, dass "Open Sans" auf Ihrem System installiert ist
+
+% 5) Inhalte im rechten Rand hinzufügen
+\AddToShipoutPictureBG{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Beispiel: Ein Logo einfügen
+    % \node at ([xshift=-25mm,yshift=-20mm]current page.north east) {%
+    %   \includegraphics[width=40mm]{praxis_logo.pdf} % Pfad zum Logo anpassen
+    % };
+    %\node (logo) [inner sep=0mm] {\includegraphics[width=40mm]{praxis_logo.pdf}};
+    %\pgfextracty{\logoHeight}{\pgfpointanchor{logo}{north}}
+    %\pgfimage[width=40mm]{praxis_logo.pdf}
+    %\pgfextracty{\imageHeight}{\pgfpointanchor{current picture}{north}}
+
+
+    % \node[draw=red, thick, inner sep=0mm] at ([xshift=-25mm,yshift=-40mm]current page.north east) {%
+    %   \includegraphics[width=40mm]{praxis_logo.pdf} % Pfad zum Logo anpassen
+    % };
+    
+    \coordinate (logoAnchor) at ([xshift=-25mm,yshift=-10mm]current page.north east);
+ % Zeichne den Rahmen exakt um die Grafik
+ \draw[red, thick] 
+ (logoAnchor) % obere rechte Ecke
+ rectangle ++(-\logoWidth, -\logoHeight); % Breite und Höhe des Logos
+
+% Füge das Logo innerhalb des Rahmens ein
+\node[anchor=north east] at (logoAnchor) {%
+ \usebox{\logoBox}
+};
+
+% TikZ-Bereich
+  % Position des Logos relativ zu current page.north east
+  % \node[anchor=north east] at ([xshift=-25mm,yshift=-10mm]current page.north east) {%
+  %   \usebox{\logoBox}
+  % };
+
+  % Roter Rahmen um das Logo
+  % \draw[red, thick] ([xshift=-25mm,yshift=-10mm]current page.north east) 
+  %   rectangle ++(-\logoWidth, -\logoHeight);
+
+    % Beispiel: Praxisinformationen einfügen
+    %\node[anchor=north east, align=right] at ([xshift=-25mm,yshift=-70mm]current page.north east) {%
+    % \node[anchor=north east, align=right] at ([xshift=-0mm,yshift=-70mm]current page.north east) {%
+    %   \begin{tabular}{r}
+    %     \textbf{Praxis Mustermann} \\
+    %     Musterstraße 123 \\
+    %     12345 Musterstadt \\
+    %     Telefon: 01234 / 567890 \\
+    %     Email: praxis@example.com \\
+    %   \end{tabular}
+    % };
+    \node[
+  draw=red,        % Zeichnet einen roten Rahmen
+  thick,           % Setzt die Linienstärke auf 'dick'
+  inner sep=5pt,   % Abstand zwischen Inhalt und Rahmen
+  anchor=north east,
+  align=left
+] at ([xshift=0mm,yshift=-70mm]current page.north east) {%
+  \begin{tabular}{l}
+    \textbf{Praxis Mustermann} \\
+    Musterstraße 123 \\
+    12345 Musterstadt \\
+    Telefon: 01234 / 567890 \\
+    Email: praxis@example.com \\
+  \end{tabular}
+};
+    
+    % Optional: Hinzufügen eines Slogans oder weiterer Informationen
+    \node[anchor=north east, align=right] at ([xshift=-25mm,yshift=-100mm]current page.north east) {%
+      \textit{Ihr Wohl ist unser Anliegen!}
+    };
+    \draw[red, thick] 
+      (current page.north west) rectangle (current page.south east);
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+% Hier fügt Quarto den Inhalt aus "diagnostik.qmd" ein
+$body$
+
+\end{document}

@@ -4,18 +4,36 @@ import pandas as pd
 import requests
 import json
 
+# Standardpfad zur Konfigurationsdatei
+CONFIG_PATH = os.path.expanduser("~/.pradisy/config.json")
+
+def load_config():
+    """
+    Lädt die Zugangsdaten aus der Konfigurationsdatei `~/.pradisy/config.json`.
+    Falls die Datei nicht existiert, wird eine Fehlermeldung ausgegeben.
+    """
+    if not os.path.exists(CONFIG_PATH):
+        raise FileNotFoundError(f"❌ Die Konfigurationsdatei {CONFIG_PATH} wurde nicht gefunden!")
+    
+    with open(CONFIG_PATH, "r") as file:
+        return json.load(file)
+
+
+# Lade die Konfiguration
+config = load_config()
+
 # API-Konfiguration für die LimeSurvey-Implementierung
-LIMESURVEY_URL = "http://limesurvey.ddev.site/index.php/admin/remotecontrol"
-USERNAME = "admin"
-PASSWORD = "admin"
+LIMESURVEY_URL = config["remote_url"]
+USERNAME = config["remote_user"]
+PASSWORD = config["remote_password"]
 
 # PostgreSQL-Konfiguration
 DB_CONFIG = {
-    "dbname": "diagnostik",
-    "user": "diagnostik_user",
-    "password": "#IntroiboAdAltareDeiAdDeumQuiLaetificatAnimaMea#",
-    "host": "localhost",
-    "port": 5432
+    "dbname": config["postgre_dbname"],
+    "user": config["postgre_user"],
+    "password": config["postgre_password"],
+    "host": config["postgre_host"],
+    "port": config["postgre_port"]
 }
 
 CREATE_PGCRYPTO_EXTENSION = "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
@@ -451,6 +469,15 @@ def list_participants(encryption_key):
 
 # Main
 if __name__ == "__main__":
+
+    try:
+        config = load_config()
+        print("✅ Konfiguration erfolgreich geladen!")
+    except Exception as e:
+        print(f"❌ Fehler beim Laden der Konfiguration: {e}")
+        sys.exit(1)  # Beende das Skript, wenn die Konfiguration fehlt
+
+
     parser = argparse.ArgumentParser(description="Verwalte die Tabellen in der PostgreSQL-Datenbank des Praxis Diagnostik Systems (PraDiSy).")
     parser.add_argument("--create-tables", action="store_true", help="Erstellt alle notwendigen Tabellen, falls sie fehlen.")
     parser.add_argument("--add-participant", action="store_true", help="Fügt einen neuen Teilnehmer hinzu oder aktualisiert vorhandene Daten.")

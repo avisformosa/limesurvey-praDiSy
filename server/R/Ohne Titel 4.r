@@ -1,0 +1,75 @@
+# Beispiel-Daten mit mehr Variation
+set.seed(123)
+daten <- data.frame(
+  Datum = seq(as.Date("2024-01-01"), as.Date("2024-01-20"), by = "days"),
+  BDI_Wert = cumsum(sample(c(-2, -1, 0, 1, 2, 3), 20, replace = TRUE)) + 15
+)
+daten$BDI_Wert <- pmax(pmin(daten$BDI_Wert, 40), 0)  # Werte auf 0–40 begrenzen
+
+# Bereiche definieren
+bereiche <- data.frame(
+  xmin = as.Date("2024-01-01"),
+  xmax = as.Date("2024-01-20"),
+  ymin = c(0, 9, 14, 20, 29),
+  ymax = c(8, 13, 19, 28, 63),
+  kategorie = c(
+    "Keine Depression",
+    "Minimale Depression",
+    "Leichte Depression",
+    "Mittelschwere Depression",
+    "Schwere Depression"
+  )
+)
+
+# Bibliotheken
+library(ggplot2)
+library(patchwork)  # Für Kombination von Plots
+
+# Hauptplot (Zeitreihe mit Kategorien)
+zeitreihe_plot <- ggplot() +
+  geom_rect(data = bereiche, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = kategorie), alpha = 0.3) +
+  geom_line(data = daten, aes(x = Datum, y = BDI_Wert), color = "black", size = 0.8) +
+  geom_point(data = daten, aes(x = Datum, y = BDI_Wert), shape = 21, fill = "white", color = "black", size = 2) +
+  geom_text(data = daten[which.max(daten$BDI_Wert), ], aes(x = Datum, y = BDI_Wert, label = BDI_Wert), vjust = -1) +  # Maximaler Punkt
+  geom_text(data = daten[which.min(daten$BDI_Wert), ], aes(x = Datum, y = BDI_Wert, label = BDI_Wert), vjust = 1.5) +  # Minimaler Punkt
+  geom_text(data = daten[nrow(daten), ], aes(x = Datum, y = BDI_Wert, label = BDI_Wert), vjust = -1) +  # Letzter Punkt
+  labs(
+    title = "Zeitreihe der BDI-Werte mit Depressionsbereichen",
+    x = "Datum",
+    y = "BDI-Wert",
+    fill = "Kategorie"
+  ) +
+  theme_minimal() +
+  scale_x_date(date_breaks = "2 days", date_labels = "%d.%m.%Y") +
+  scale_y_continuous(expand = expansion(mult = c(0.1, 0.1))) +  # Erweiterte Skalen
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"  # Legende oben
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Keine Depression" = "green",
+      "Minimale Depression" = "yellow",
+      "Leichte Depression" = "orange",
+      "Mittelschwere Depression" = "red",
+      "Schwere Depression" = "darkred"
+    )
+  )
+
+# Boxplot mit Datenpunkten, Mittelwert und Übergangslinien
+boxplot <- ggplot(daten, aes(x = "", y = BDI_Wert)) +
+  geom_boxplot(fill = "lightblue", outlier.shape = NA) +
+  geom_jitter(aes(color = BDI_Wert), width = 0.2, size = 2, shape = 21, fill = "white") +
+  geom_hline(yintercept = c(8, 13, 19, 28), linetype = "dashed", color = "gray") +  # Kritische Übergänge
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 4, fill = "red") +  # Mittelwert
+  labs(
+    title = "Boxplot der BDI-Werte mit Streuungsmaßen",
+    x = "",
+    y = "BDI-Wert"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0.1, 0.1)))
+
+# Kombinierter Plot
+zeitreihe_plot / boxplot

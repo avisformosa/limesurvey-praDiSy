@@ -1,0 +1,86 @@
+\documentclass[12pt]{scrartcl}
+
+% ----------------------------------
+%    1. Seitenlayout (rechter Rand 5 cm)
+% ----------------------------------
+\usepackage[a4paper,left=2.5cm,right=5cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+% ----------------------------------
+%    2. XeLaTeX & Fonts
+% ----------------------------------
+\usepackage{fontspec}
+% Hier stellst du deine Hauptschrift ein.
+% Open Sans kann mehrere Schriftschnitte haben (Light, Regular, Semibold, Bold).
+% Voraussetzung: Open Sans ist im System installiert oder via TeX-Distribution verfügbar.
+\setmainfont{Open Sans}[
+  % Hier kannst du ggf. noch den Pfad oder Stil-Optionen setzen,
+  % z.B. wenn du verschiedene Schnittdateien (.ttf/.otf) explizit angeben willst.
+  %
+  % Example:
+  % Path = /path/to/fonts/,
+  % UprightFont = *-Regular,
+  % BoldFont = *-Bold,
+  % ItalicFont = *-Italic,
+  % BoldItalicFont = *-BoldItalic,
+  % ...
+]
+
+% Optional: ein paar Named Variants, z.B.:
+%\newfontfamily\opensanslight{Open Sans Light}
+%\newfontfamily\opensanssemibold{Open Sans Semibold}
+
+% ----------------------------------
+%    3. Logo-Integration
+% ----------------------------------
+\usepackage{graphicx}
+
+% ----------------------------------
+%    4. Fancyhdr für Kopf-/Fußzeilen
+%       (Wenn du das Layout auf jeder Seite willst)
+% ----------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % alles leeren
+
+% Rechten Seitenrand weiter frei, wir platzieren unten gleich was
+% in \fancyhead[R].
+% Wenn du NUR die 1. Seite gestalten willst, könnte man "titlepage" o.Ä. nutzen.
+ 
+% Ein Ansatz: Unten eine minipage mit Logo und Text:
+\fancyhead[R]{
+  \begin{minipage}[t]{3.8cm} % leicht schmaler als 5 cm Rand
+    \vspace{-1.0cm}% nach Bedarf anpassen
+    \includegraphics[width=3.5cm]{praxis_logo.pdf}\\[0.5em]
+    % Zeile 1: normal
+    {\fontsize{10pt}{12pt}\selectfont
+      Gemeinschaftspraxis\\
+      für Psychotherapie\\[0.2em]
+      \textbf{Langen \& Ziervogel}\\[0.6em]
+      \textit{Schillerstraße 1\\
+      99096 Erfurt\\
+      Tel.: 0361 6 53 86 98\\
+      Mail: a.ziervogel@gemeinschaftspraxis-psychotherapie-erfurt.de
+      }%
+    }
+  \end{minipage}
+}
+
+% ----------------------------------
+%    5. Dokument
+% ----------------------------------
+\begin{document}
+
+% Beispiel eines Titelsegments, 
+% das NICHT mit \maketitle arbeitet, damit fancyhdr aktiv bleibt:
+{\huge Dein Diagnostik-Titel}\par
+\vspace{1em}
+\normalsize
+Irgendein einleitender Text.
+
+\bigskip
+
+Hier könnte mehr Inhalt stehen, 
+und du solltest auf jeder Seite (oder ab der zweiten Seite) 
+oben rechts das Logo + Text sehen.
+
+\end{document}

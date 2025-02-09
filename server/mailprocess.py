@@ -14,22 +14,36 @@ import pandas as pd
 import fcntl
 
 
-# IMAP-Server-Konfiguration
-# DEMOPNSTRATION PURPOSE
-# IMAP_SERVER = "imap.strato.de"
-# USERNAME = "diagnostik@gemeinschaftspraxis-psychotherapie-erfurt.de"
-# PASSWORD = "#AspergesMeHysopoEtMundabor#"
-IMAP_SERVER = "imap.strato.de"
-USERNAME = "pradisy@gemeinschaftspraxis-psychotherapie-erfurt.de"
-PASSWORD = "#RorateCaeliDesuper#3"
+# Standardpfad zur Konfigurationsdatei
+CONFIG_PATH = os.path.expanduser("~/.pradisy/config.json")
+
+def load_config():
+    """
+    Lädt die Zugangsdaten aus der Konfigurationsdatei `~/.pradisy/config.json`.
+    Falls die Datei nicht existiert, wird eine Fehlermeldung ausgegeben.
+    """
+    if not os.path.exists(CONFIG_PATH):
+        raise FileNotFoundError(f"❌ Die Konfigurationsdatei {CONFIG_PATH} wurde nicht gefunden!")
+    
+    with open(CONFIG_PATH, "r") as file:
+        return json.load(file)
+
+# Lade die Konfiguration
+config = load_config()
+
+IMAP_SERVER = config["mail_processing_imap_server"]
+IMAP_USERNAME = config["mail_processing_user"]
+USERNAME = config["mail_processing_user"]
+IMAP_PASSWORD = config["mail_processing_password"]
+PASSWORD = config["mail_processing_password"]
 
 # PostgreSQL-Konfiguration
 DB_CONFIG = {
-    "dbname": "diagnostik",
-    "user": "diagnostik_user",
-    "password": "#IntroiboAdAltareDeiAdDeumQuiLaetificatAnimaMea#",
-    "host": "localhost",
-    "port": 5432
+    "dbname": config["postgre_dbname"],
+    "user": config["postgre_user"],
+    "password": config["postgre_password"],
+    "host": config["postgre_host"],
+    "port": config["postgre_port"]
 }
 
 # Basis-Verzeichnis

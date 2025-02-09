@@ -1,0 +1,53 @@
+---
+title: "Diagnostik-Report"
+format:
+  pdf:
+    engine: xelatex
+    template: "diagnostik_template.tex"
+    # template: "diagnostik_template-simple.tex"
+    # template: "diagnostik_template-fancy.tex"
+    # template: "diagnostik_template-tikz.tex"
+    # template: "diagnostik_template-two.tex"
+execute:
+  echo: false
+  warning: false
+  error: false
+params:
+  sum_score: 0
+  document_title: "Standard-Dokument-Title"
+  patient_name: "Standard-Patient"
+  test_abrev: "SCL90-R"
+  datum: "07.02.2025"
+  pat_name: "Müller"
+  pat_surname: "Klaus"
+  pat_gebdat: "05.05.1999"
+---
+
+# Einleitung
+
+Dies ist ein Quarto-Dokument, das mit **XeLaTeX** gerendert wird.  
+Wir möchten Parameter verwenden, die aus `analysis.R` übergeben werden.
+
+## Parameter
+
+- **Titel**: `r params$document_title`
+- **Patient**: `r params$patient_name`
+- **Ermittelter Score**: `r params$sum_score`
+
+## Patientendaten
+- **Test**: `r params$test_abrev`
+- **Datum**: `r params$datum`
+- **Geburtsdatum**: `r params$pat_gebdat`
+- **Patient**: `r paste(params$pat_surname, params$pat_name)`
+
+
+
+## Weiterer Inhalt
+
+Hier kannst du mehr Text, Abbildungen, Analysen etc. hinzufügen.  
+Bei einem längeren Text könntest du so mehrere Seiten füllen.
+```{r}
+# Test
+# mydate <- Sys.Date()
+# mydate
+```

@@ -1,0 +1,39 @@
+\documentclass{article}
+
+% 1) Seitenränder mit geometry festlegen
+\usepackage[a4paper,
+  left=25mm,      % Linker Rand: 25mm
+  top=25mm,       % Oberer Rand: 25mm
+  bottom=25mm,    % Unterer Rand: 25mm
+  right=50mm      % Rechter Rand: 50mm (5cm)
+]{geometry}
+
+% 2) Pakete für TikZ und Farben
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{atbegshi} % Zum Hinzufügen von TikZ-Befehlen auf jeder Seite
+
+% 3) Fix für \tightlist (Pandoc-Standard)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% 4) Schriftart festlegen (Open Sans)
+\usepackage{fontspec}
+\setmainfont{Open Sans}
+
+% 5) Rote Linie mit TikZ auf jeder Seite zeichnen
+\AtBeginShipout{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[red, very thick] 
+      ([xshift=-50mm]current page.east |- current page.north) -- 
+      ([xshift=-50mm]current page.east |- current page.south);
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+% Hier fügt Quarto den Inhalt des .qmd-Dokuments ein
+$body$
+
+\end{document}

@@ -1,0 +1,42 @@
+\documentclass{article}
+
+% 1) Seitenränder mit geometry festlegen
+\usepackage[a4paper,
+  left=25mm,      % Linker Rand: 25mm
+  top=25mm,       % Oberer Rand: 25mm
+  bottom=25mm,    % Unterer Rand: 25mm
+  right=50mm      % Rechter Rand: 50mm (5cm)
+]{geometry}
+
+% 2) Pakete für das Zwei-Spalten-Layout und Farben
+\usepackage{paracol}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+% 3) Fix für \tightlist (Pandoc-Standard)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% 4) Schriftart festlegen (Open Sans)
+\usepackage{fontspec}
+\setmainfont{Open Sans}
+
+\begin{document}
+
+% 5) Start des Zwei-Spalten-Layouts
+\begin{paracol}{2}
+
+% 6) Linke Spalte: Haupttext
+\switchcolumn[0]
+% Quarto fügt hier den Haupttext ein
+$body$
+
+% 7) Rechte Spalte: Platz für zukünftigen Inhalt (z.B. Logo, Anschrift)
+\switchcolumn
+% Platzhalter für den rechten Rand
+% Hier kannst du später Logo, Anschrift und Seitenzahlen hinzufügen
+
+\end{paracol}
+
+\end{document}

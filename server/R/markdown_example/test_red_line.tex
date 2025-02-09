@@ -1,0 +1,50 @@
+\documentclass{article}
+
+% 1) Seitenränder festlegen
+\usepackage[a4paper,
+  left=25mm,      % Linker Rand: 25mm
+  top=25mm,       % Oberer Rand: 25mm
+  bottom=25mm,    % Unterer Rand: 25mm
+  right=50mm      % Rechter Rand: 50mm (5cm)
+]{geometry}
+
+% 2) Pakete für den Hintergrund und Farben
+\usepackage{eso-pic}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+% 3) Fix für \tightlist (Pandoc-Standard)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% 4) Schriftart festlegen (optional)
+\usepackage{fontspec}
+\setmainfont{Open Sans}
+
+% 5) Rote Linie am Übergang zum rechten Rand mit TikZ
+\AddToShipoutPicture{%
+  \begin{tikzpicture}[remember picture,overlay]
+    % Definieren Sie die Position der Linie:
+    % x-Position: 25mm (linker Rand) + 135mm (Textbreite) = 160mm von links
+    % y-Start: 25mm vom oberen Rand
+    % y-Ende: 25mm vom unteren Rand
+    \draw[red, thick] 
+      ([xshift=0mm,yshift=-25mm]current page.north east) -- 
+      ([xshift=0mm,yshift=25mm]current page.south east);
+  \end{tikzpicture}%
+}
+
+\begin{document}
+
+\section*{Test der roten Linie}
+
+Dies ist ein Testdokument, um zu überprüfen, ob die rote Linie am rechten Rand korrekt angezeigt wird.
+
+\newpage
+
+\section*{Weitere Seite}
+
+Dies ist eine weitere Seite, um die rote Linie auf mehreren Seiten zu testen.
+
+\end{document}

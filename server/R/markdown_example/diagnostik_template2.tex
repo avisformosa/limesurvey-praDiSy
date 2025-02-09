@@ -1,0 +1,49 @@
+\documentclass[12pt,oneside]{scrartcl}
+
+% --- 1) Seitenaufteilung: 5 cm Rand rechts
+\usepackage[a4paper,
+  left=20mm,
+  top=20mm,
+  bottom=20mm,
+  right=50mm]{geometry}
+
+% --- 2) Farbiger Streifen (eso-pic) & Grafik
+\usepackage{eso-pic}   % ermöglicht das Platzieren von Objekten auf jeder Seite
+\usepackage{xcolor}    % Farbverwaltung
+\usepackage{graphicx}  % falls du später ein Logo o.Ä. einbinden willst
+
+% Wir fügen einen 5 cm breiten roten Balken am rechten Papierrand ein
+\AddToShipoutPicture{
+  \AtPageLowerLeft{
+    % Startpunkt am unteren linken Rand der Seite
+    % \paperwidth-5cm -> x-Koordinate,  0 -> y-Koordinate
+    \put(\LenToUnit{\dimexpr\paperwidth-50mm},0){
+      \color{red}%
+      \rule{50mm}{\LenToUnit\paperheight}%
+    }
+  }
+}
+
+% --- 3) XeLaTeX & Fontspec
+\usepackage{fontspec}
+% (Optional) Setze hier eine Schrift, wenn du magst:
+%\setmainfont{Helvetica} % oder "Open Sans", etc.
+
+% --- 4) Seitenstil: Seitenzahl unten rechts (mit 5 cm Versatz)
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % alles leeren
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Damit die Seitenzahl nicht in den roten Bereich rutscht, 
+% verschieben wir die Fußzeile 5 cm nach rechts:
+\fancyfootoffset[RO,LE]{50mm}  
+% "RO" = right odd, "LE" = left even (falls du später twoside nutzen willst)
+
+\fancyfoot[R]{\thepage} % Seitenzahl unten rechts
+
+% --- 5) Hier kommt Quarto-Inhalt
+\begin{document}
+$body$
+\end{document}

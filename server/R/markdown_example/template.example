@@ -1,0 +1,61 @@
+## Beispiel-Template Diagnostik_simple.tex
+
+\documentclass[12pt]{scrartcl}  % scrartcl ist die KOMA-Script-Variante von article
+\usepackage[utf8]{inputenc}     % Falls nicht ohnehin modernere UTF-8 Wege genutzt werden
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}            % Bessere Fonts
+\usepackage[margin=2cm]{geometry} % Seitenränder anpassen
+\usepackage{fancyhdr}           % Für Kopf- und Fußzeilen
+\pagestyle{fancy}
+
+% Kopfzeile (links Titel, rechts Datum)
+\fancyhead[L]{$title$}
+\fancyhead[R]{\today}
+% \fancyhead[R]{$date$}. % Wenn date aus dem YAML Header verwendet werden soll.
+
+% Fußzeile leer
+\fancyfoot{}
+
+% Falls du eine Seitenzahl unten rechts willst:
+%\fancyfoot[R]{\thepage}
+
+% -- Quarto-Platzhalter starten --
+% $title$, $author$, $date$ usw. sind Felder, die Quarto (bzw. Pandoc) ersetzt.
+% $body$ enthält den eigentlichen Dokumentinhalt.
+
+\begin{document}
+  % Titel ausgeben (falls definiert)
+  $if(title)$
+    \begin{center}
+      {\huge $title$}
+      \bigskip
+
+      $if(author)$
+        \large $author$
+        \par
+      $endif$
+      
+      $if(date)$
+        \date{$date$}
+      $endif$
+    \end{center}
+    \bigskip
+  $endif$
+
+  % Hier kommt der Inhalt des Dokuments:
+  $body$
+
+\end{document}
+
+
+1. $title$, $author$, $date$, $body$ sind Platzhalter, die Quarto (bzw. Pandoc) automatisch füllt.
+2. In LaTeX-Templates für Quarto (oder Pandoc) kannst du neben $title$, $author$ und $body$ auch andere Variablen nutzen.
+   Beispiele:
+    $subtitle$
+    $keywords$
+    $institute$ (manchmal university)
+    $toc$ (Tabelle der Inhalte, wenn du toc: true in Quarto-YAML setzt)
+    $include-before$ und $include-after$
+
+Zudem kannst du in deinem Quarto-YAML beliebige Eigene Felder definieren und
+sie mit $meta:...$ ansprechen (dazu fortgeschrittenere Pandoc/Quarto-Dokus).

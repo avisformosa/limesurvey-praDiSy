@@ -1,0 +1,16 @@
+---
+title: "Report mit Parametern"
+author: "Dein Name"
+date: "`r format(Sys.Date(), '%d.%m.%Y')`"
+output: 
+  pdf_document:
+    keep_tex: false   # setze auf TRUE, wenn du das .tex behalten willst
+params:
+  document_title: "Standard Titel"
+  sum_score: 0
+---
+## Titel
+Der im Skript definierte Titel lautet: **`r params$document_title`**.
+
+## Ergebnisse
+Der berechnete Score beträgt: **`r params$sum_score`**.

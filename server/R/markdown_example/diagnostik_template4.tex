@@ -1,0 +1,71 @@
+\documentclass[12pt,oneside]{scrartcl}
+
+% 1) Seitenränder: Wir lassen 5 cm Platz rechts
+\usepackage[a4paper,
+  left=25mm,
+  top=25mm,
+  bottom=25mm,
+  right=50mm]{geometry}
+
+% 2) Pakete für das Zeichnen, Logo, Farben
+\usepackage{eso-pic}   % um Objekte (Linien, Logo) auf jeder Seite zu platzieren
+\usepackage{xcolor}    % Farben
+\usepackage{graphicx}  % Grafik-Einbindung (Logo)
+\usepackage{fontspec}  % Damit XeLaTeX Schriften laden kann
+\usepackage{fancyhdr}  % Für Seitenzahlen
+
+% -----------------------------
+% 3) Rote Trennlinie am Übergang zwischen Textbereich und 5cm-Rand
+% -----------------------------
+% Idee: wir legen eine dünne rote Linie
+% an die x-Position (paperwidth - 50mm).
+% Sie geht von y=0 (Seitenunterkante) bis y=paperheight.
+
+\AddToShipoutPicture{
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{\paperwidth - 50mm}, 0){%
+      \color{red}%
+      \rule{1pt}{\LenToUnit\paperheight}%
+    }%
+  }
+}
+
+% -----------------------------
+% 4) Logo (mit schwarzem Rahmen) oben im rechten Rand
+% -----------------------------
+% Wir platzieren das Logo am oberen Seitenrand (AtPageUpperLeft).
+% x = paperwidth - 50mm + ein paar mm "Innenabstand"
+% y = z.B. 25mm von oben, anpassen nach Bedarf.
+\AddToShipoutPicture{
+  \AtPageUpperLeft{
+    \put(\LenToUnit{\paperwidth - 50mm + 5mm}, \LenToUnit{25mm}){%
+      % Schwarzer Rahmen:
+      \setlength{\fboxrule}{1pt}
+      \setlength{\fboxsep}{2pt}
+      \fbox{%
+        \includegraphics[width=30mm]{praxis_logo.pdf}%
+      }%
+    }
+  }
+}
+
+% -----------------------------
+% 5) Seitenzahl unten rechts IM roten Rand
+% -----------------------------
+\pagestyle{fancy}
+\fancyhf{}               % alles leeren
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Damit die Fußzeile im 5cm-Rand sitzt, 
+% verschieben wir sie (um 50mm).
+%\fancyfootoffset[RO,LE]{50mm}   % [RO,LE] nur relevant, wenn twoside
+\fancyfootoffset[R]{50mm}   % [RO,LE] nur relevant, wenn twoside
+\fancyfoot[R]{\thepage}         % Seitenzahl unten rechts
+
+% -----------------------------
+% 6) Hier füllt Quarto den Inhalt ($body$) ein
+% -----------------------------
+\begin{document}
+$body$
+\end{document}

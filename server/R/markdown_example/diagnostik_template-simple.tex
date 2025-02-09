@@ -1,0 +1,38 @@
+\documentclass{article}
+
+% 1) Seitenränder mit geometry festlegen
+\usepackage[a4paper,
+  left=25mm,      % Linker Rand: 25mm
+  top=25mm,       % Oberer Rand: 25mm
+  bottom=25mm,    % Unterer Rand: 25mm
+  right=50mm      % Rechter Rand: 50mm (5cm)
+]{geometry}
+
+% 2) Pakete für das Zeichnen der roten Linie
+\usepackage{eso-pic}   % Zum Hinzufügen von Objekten auf jeder Seite
+\usepackage{xcolor}    % Farben definieren
+
+% 3) Fix für \tightlist (Pandoc-Standard)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% 4) Schriftart festlegen (Open Sans)
+\usepackage{fontspec}
+\setmainfont{Open Sans}
+
+% 5) Rote Linie am Übergang zum rechten Rand
+\AddToShipoutPictureBG{%
+  \AtPageUpperLeft{%
+    \put(\LenToUnit{\paperwidth - 50mm},0){%
+      \color{red}\rule{1pt}{\paperheight}%
+    }
+  }
+}
+
+\begin{document}
+
+% Hier fügt Quarto den Inhalt des .qmd-Dokuments ein
+$body$
+
+\end{document}

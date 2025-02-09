@@ -1,0 +1,11 @@
+---
+title: "Minimal Test"
+format:
+  pdf:
+    template: "diagnostik_template.tex"
+    engine: xelatex
+---
+
+# Test
+
+Dies ist ein kurzer Text ohne LaTeX-Schnickschnack.

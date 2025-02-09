@@ -1,0 +1,104 @@
+\documentclass[a4paper]{article}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, shadows,calc, layers}
+
+\begin{document}
+
+\section*{TikZ-Beispiel: Platzierung von Nodes mit Referenzpunkten}
+
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[help lines] (current page.north west) grid (current page.south
+  east);
+  \fill[red] (current page.north east) circle (5pt);
+  \fill[blue] ([xshift=-50mm]current page.north east) circle (5pt);
+  % Ihre Zeichnung hier
+\end{tikzpicture}
+
+\begin{tikzpicture}%[remember picture,overlay]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at ($(A) + (2cm,1cm)$);
+  
+  \draw[fill=blue!20] (A) circle (3pt) node[below left] {A};
+  \draw[fill=red!20] (B) circle (3pt) node[above right] {B};
+  \draw[->] (A) -- (B) node[midway, above] {Bewegung};
+\end{tikzpicture}
+
+\begin{tikzpicture}
+
+%  \coordinate (X) at (3,5);
+%  \fill[red] (X) circle (2pt); % Roter Punkt an Referenz
+  
+% 1. Ein einfacher Node mit Text und einem Rechteckrahmen
+\node[draw] at (0, 0) (node1) {Ein einfacher Textblock};
+\fill[red] (node1) circle (2pt); % Roter Punkt an Referenz
+
+%\node[draw] at ([xshift=-25mm,yshift=-70mm]current page.north east) (node12) {Ein einfacher Textblock};
+%\fill[red] (current page.north east) circle (2pt); % Roter Punkt an Referenz
+
+% 2. Node mit abgerundeten Ecken und Hintergrundfarbe
+\node[draw, rounded corners, fill=blue!20] at (6, 0) (node2) {Abgerundete Ecken und Farbe};
+\fill[red] (node2) circle (2pt); % Roter Punkt an Referenz
+
+% 3. Node mit dickem Rahmen und Schatten
+\node[draw, very thick, drop shadow] at (0, -2) (node3) {Dicker Rahmen mit Schatten};
+\fill[red] (node3) circle (2pt); % Roter Punkt an Referenz
+
+% 4. Node mit geometrischer Form (Ellipse)
+\node[draw, ellipse, fill=green!20] at (6, -2) (node4) {Elliptischer Rahmen};
+\fill[red] (node4) circle (2pt); % Roter Punkt an Referenz
+
+% 5. Node mit fester Breite und zentriertem Text
+\node[draw, text width=4cm, align=center] at (0, -4) (node5) {Feste Breite und zentrierter Text};
+\fill[red] (node5) circle (2pt); % Roter Punkt an Referenz
+
+% 6. Node mit benutzerdefiniertem Stil
+\tikzset{customstyle/.style={draw, fill=yellow!50, text width=3cm, align=center, rounded corners}}
+\node[customstyle] at (6, -4) (node6) {Node mit benutzerdefiniertem Stil};
+\fill[red] (node6) circle (2pt); % Roter Punkt an Referenz
+
+% 7. Zwei Nodes mit Verbindungslinie
+\node[draw, circle] at (-3, -6) (node7) {Node A};
+\fill[red] (node7) circle (2pt); % Roter Punkt an Referenz
+\node[draw, circle] at (3, -6) (node8) {Node B};
+\fill[red] (node8) circle (2pt); % Roter Punkt an Referenz
+\draw[->] (node7) -- (node8);
+
+% \node[
+%   draw=red,        % Zeichnet einen roten Rahmen
+%   thick,           % Setzt die Linienstärke auf 'dick'
+%   inner sep=5pt,   % Abstand zwischen Inhalt und Rahmen
+%   anchor=north east,
+%   align=right
+% ] at ([xshift=-25mm,yshift=-70mm]current page.north east) {%
+%   \begin{tabular}{r}
+%     \textbf{Praxis Mustermann} \\
+%     Musterstraße 123 \\
+%     12345 Musterstadt \\
+%     Telefon: 01234 / 567890 \\
+%     Email: praxis@example.com \\
+%   \end{tabular}
+% };
+
+
+\end{tikzpicture}
+
+
+
+% \tikzset{my doodle/.pic=%
+%     {%
+%         \coordinate (-A) at (0,0);
+%         \coordinate (-B) at (1cm, 0);
+%         \coordinate (-C) at (1cm, -1cm);
+%         \coordinate (-D) at (0, -1cm);
+%         \draw[line width=1.5mm,red!40!orange!30!yellow] (-A) -- (-B) -- (-C) -- (-D) -- cycle; % gold rectangle
+%     % blue line
+        
+%         \coordinate (-D1) at (-0.055cm,-1.07cm);
+%         \path let \p1=(-D1) in coordinate (-D2) at (-0.25cm,\y1+0.1cm) ; 
+%         \path let \p2=(-D2) in coordinate (-D3) at (-0.1cm,\y2-0.05cm); 
+        
+%         \draw[blue] (-D1) -- (-D2) -- (-D3);
+%     }%
+% }
+
+\end{document}

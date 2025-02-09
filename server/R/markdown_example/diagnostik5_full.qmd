@@ -1,0 +1,82 @@
+---
+title: "Psychodiagnostischer Befundbericht"
+format:
+  pdf:
+    engine: xelatex
+    template: "diagnostik_template.tex"
+execute:
+  echo: false
+  warning: false
+  error: false
+bibliography: reference.bib
+# csl: apa.csl # Optional: Stil für die Referenzen (z.B., APA-Format)  
+params:
+  sum_score: 0
+  document_title: "Psychodiagnostischer Befundbericht"
+  patient_name: "Standard-Patient"
+  test_name: "Beck-Depressions-Inventar"
+  test_abrev: "BDI-II"
+  datum: "07.02.2025"
+  pat_surname: "Müller"
+  pat_name: "Klaus"
+  pat_gebdat: "05.05.1999"
+  pat_id: "12345"
+  pat_gender: "männlich"
+  education: "Studium (4)"
+  notes: "--leer--"
+  test_date: "07.02.2025"
+  tester_title: "Dipl. Psych."
+  tester_name: "André"
+  tester_surname: "Ziervogel"
+  tester_email: "a.ziervogel@gemeinschaftspraxis-psychotherapie-erfurt.de"
+  test_duration: "15:46"
+
+---
+
+# Testbeschreibung
+
+Das Beck-Depressions-Inventar, kurz BDI, ist ein validiertes, psychologisches Testverfahren, das die Schwere depressiver Symptome erfasst. In Form eines Fragebogens gibt der Patient selbst an, wie er sich im Verlauf der letzten Woche gefühlt hat.
+Es gibt keine Vergleichstichprobe und eignet sich nicht als Cut-Off-Screening-Instrument, wohl aber zur Verlaufsbeurteilung und differentialdiagnostischen Einordnung. Die hier verwendete zweite Version (BDI II) wurde 1996 veröffentlich und orientiert sich an den DSM-IV-Kriterien für major depression. Smith und Doe haben eine wichtige Studie veröffentlicht \cite{smith2023}. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+
+# Testdurchführung
+
+```{r}
+# Dynamisch Anrede und Initialen basierend auf pat_gender
+get_salutation <- function(gender, surname) {
+  salutation <- switch(
+    gender,
+    "männlich" = "Herr",
+    "weiblich" = "Frau",
+    "divers" = "Mx.",
+    "???"
+  )
+  initial <- substr(surname, 1, 1) # Erstes Zeichen des Nachnamens
+  return(paste(salutation, initial, "."))
+}
+
+salutation <- get_salutation(params$pat_gender, params$pat_surname)
+
+# Dynamischen Satz generieren
+sentence <- paste(
+  salutation,
+  "hat das", params$test_name, "(", params$test_abrev, ")",
+  "am", params$test_date,
+  "in elektronischer Form bearbeitet. Die Bearbeitungsdauer betrug",
+  params$test_duration, "Minuten (min:sec)","."
+)
+```
+`r sentence`
+
+# Testergebnisse
+
+```{r echo=FALSE}
+# Beispiel eines Ergebnisses
+library(kableExtra)
+
+results <- data.frame(
+  Kategorie = c("Depression", "Anxiety", "Stress"),
+  Score = c(20, 15, 10)
+)
+knitr::kable(results, caption = "Testergebnisse")
+```

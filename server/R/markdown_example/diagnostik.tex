@@ -1,0 +1,277 @@
+\documentclass{article}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage[ngerman]{babel}
+\usepackage{fontspec} % Für XeLaTeX, um Systemschriftarten zu nutzen
+\setmainfont{Open Sans}
+\usepackage{everypage} % Für das Hinzufügen von Inhalten zu jeder Seite
+
+\usepackage{lastpage} % Für die korrekte Seitenanzahl
+
+%\usepackage{natbib} % Für Zitate und Referenzen
+%\bibliographystyle{apalike} % Stil der Referenzen
+%\usepackage[backend=bibtex,style=apa]{biblatex} % Ersetze "style=apa" durch deinen bevorzugten Stil
+%\addbibresource{reference.bib} % Bibliographie-Datei einbinden
+
+\usepackage{tikz}
+\usetikzlibrary{calc} % Für Koordinatenberechnungen
+\usepackage{bookmark}
+\usepackage{hyperref} % Für Links und Referenzen
+\usepackage{apacite}
+
+\renewcommand{\bibname}{Literaturverzeichnis}
+\renewcommand{\refname}{Literaturverzeichnis}
+
+
+% --- Fix für \tightlist ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% Umgebung für CSLReferences definieren
+% \newenvironment{CSLReferences}[2] % Argumente für Pandoc
+%   {\begin{enumerate}[leftmargin=2em]} % Anpassung des linken Einzugs
+%   {\end{enumerate}}
+
+
+% Variablen für Layout
+\newcommand{\logowidth}{40mm}
+\newcommand{\logoTextSpacing}{1mm}
+\newcommand{\rightmarginwidth}{50mm}
+\newcommand{\leftmarginwidth}{10mm}
+\newcommand{\uppermarginheight}{10mm}
+\newcommand{\lowermarginheight}{30mm}
+\newcommand{\footerdistance}{15mm} % Abstand der Fußzeile vom unteren Rand
+% Zusätzlicher Rand
+\newlength{\extendedrightmargin}
+\setlength{\extendedrightmargin}{\rightmarginwidth}
+\addtolength{\extendedrightmargin}{10mm}
+\usepackage[a4paper,
+  %top=\uppermarginheight, % Abstand vom oberen Rand
+  top=0mm, % Abstand vom oberen Rand
+  bottom=30mm, % Abstand vom unteren Rand
+  left=\leftmarginwidth, % Abstand vom linken Rand
+  right=\extendedrightmargin, % Abstand vom rechten Rand (für statische Infos)
+  includeheadfoot]{geometry}
+  % Verkleinerung des Textblocks rechts
+
+
+
+% Eine Box verwenden, um die Höhe und Breite der Grafik zu ermitteln
+\newsavebox{\logobox}
+\sbox{\logobox}{\includegraphics[width=\logowidth]{praxis_logo.pdf}}
+\newlength{\logoheight}
+\setlength{\logoheight}{\ht\logobox} % Höhe der Grafik
+\addtolength{\logoheight}{\dp\logobox} % Tiefe hinzufügen
+
+% Seitenstil deaktivieren
+\pagestyle{empty}
+
+\begin{document}
+% \AddEverypageHook{
+% \begin{tikzpicture}[remember picture, overlay]
+%   \node[anchor=north west] 
+%   at ([yshift=\footerdistance]rightmarginlower) {%
+%     {Seite \thepage\ von \pageref{LastPage}}
+%   };
+% \end{tikzpicture}
+% }
+ \AddEverypageHook{ 
+ % \begin{tikzpicture}[remember picture, overlay]
+    \begin{tikzpicture}[remember picture, overlay, inner sep=0mm, outer sep=0mm]
+    % Dynamische Koordinaten für den rechten Rand
+    \coordinate (rightmarginupper) at ([xshift=-\rightmarginwidth]current page.north east);
+    \coordinate (rightmarginlower) at ([xshift=-\rightmarginwidth]current page.south east);
+    \draw[red, dashed, thick] (rightmarginupper) -- (rightmarginlower);
+    % Dynamische Koordinaten für den linken Rand
+    \coordinate (leftmarginupper) at ([xshift=\leftmarginwidth]current page.north west);
+    % Dynamische Fußzeile rechts (Seitenzahlen)
+    % Basis-Node mit Logo und Rahmen
+    \node[anchor=south west, draw=red, thick, inner sep=0mm] 
+    (logoNode) 
+    at ([yshift=-\logoheight -\uppermarginheight]rightmarginupper) {%
+      \includegraphics[width=\logowidth]{praxis_logo.pdf} % Logo einfügen
+    };
+    % Textblock unter dem Logo
+    \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+    at ([yshift=-\logoTextSpacing]logoNode.south west) {%
+      \begin{minipage}{\logowidth} % Textblock ist genauso breit wie das Logo
+        \centering
+        \resizebox{\textwidth}{!}{Gemeinschaftspraxis} \\[0.5mm]
+        \resizebox{\textwidth}{!}{für Psychotherapie}
+      \end{minipage}
+    };
+    % Zusätzliche Zeilen unter "Gemeinschaftspraxis"
+    \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+    at ([yshift=-\logoTextSpacing - 10mm]logoNode.south west) {%
+      \begin{minipage}{\logowidth} % Textblock ist genauso breit wie das Logo
+        \centering
+        \resizebox{\textwidth}{!}{\textbf{Langen \& Ziervogel}}
+      \end{minipage}
+    };
+    % Adresse unter "Langen & Ziervogel"
+    \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+    at ([yshift=-\logoTextSpacing - 20mm]logoNode.south west) {%
+      \begin{minipage}{\logowidth}
+        {\fontsize{10}{12}\selectfont Schillerstraße 1 \\ 99096 Erfurt}
+      \end{minipage}
+    };
+    % Dynamische Fußzeile mit Quarto-Parametern (zwei Zeilen)
+    \node[anchor=base west, text width=0.8\textwidth, align=left] 
+    at ([xshift=\leftmarginwidth, yshift=\footerdistance]current page.south west) {%
+      Befundbericht: \textbf{BDI-II} vom \textbf{07.02.2025} \\[0.5mm]
+      Patient: \textbf{Müller, Klaus} (Geb.-Datum: \textbf{05.05.1999})
+    };
+    \node[anchor=north west] 
+      at ([yshift=\footerdistance]rightmarginlower) {%
+        {Seite \thepage\ von \pageref{LastPage}}
+      };
+  \end{tikzpicture}%
+ }
+% \begin{tikzpicture}[remember picture, overlay]
+%   % Dynamische Koordinaten für den rechten Rand
+%   \coordinate (rightmarginupper) at ([xshift=-\rightmarginwidth]current page.north east);
+%   \coordinate (rightmarginlower) at ([xshift=-\rightmarginwidth]current page.south east);
+%   \draw[red, dashed, thick] (rightmarginupper) -- (rightmarginlower);
+
+%   % Dynamische Koordinaten für den linken Rand
+%   \coordinate (leftmarginupper) at ([xshift=\leftmarginwidth]current page.north west);
+
+%   % Basis-Node mit Logo und Rahmen
+%   \node[anchor=south west, draw=red, thick, inner sep=0mm] 
+%     (logoNode) 
+%     at ([yshift=-\logoheight -\uppermarginheight]rightmarginupper) {%
+%       \includegraphics[width=\logowidth]{praxis_logo.pdf} % Logo einfügen
+%     };
+
+%   % Textblock unter dem Logo
+%   \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+%   at ([yshift=-\logoTextSpacing]logoNode.south west) {%
+%     \begin{minipage}{\logowidth} % Textblock ist genauso breit wie das Logo
+%       \centering
+%       \resizebox{\textwidth}{!}{Gemeinschaftspraxis} \\[0.5mm]
+%       \resizebox{\textwidth}{!}{für Psychotherapie}
+%     \end{minipage}
+%   };
+
+%   % Zusätzliche Zeilen unter "Gemeinschaftspraxis"
+%   \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+%   at ([yshift=-\logoTextSpacing - 10mm]logoNode.south west) {%
+%     \begin{minipage}{\logowidth} % Textblock ist genauso breit wie das Logo
+%       \centering
+%       \resizebox{\textwidth}{!}{\textbf{Langen \& Ziervogel}}
+%     \end{minipage}
+%   };
+
+%   % Adresse unter "Langen & Ziervogel"
+%   \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+%   at ([yshift=-\logoTextSpacing - 20mm]logoNode.south west) {%
+%     \begin{minipage}{\logowidth}
+%       {\fontsize{10}{12}\selectfont Schillerstraße 1 \\ 99096 Erfurt}
+%     \end{minipage}
+%   };
+
+%   % Dynamische Fußzeile mit Quarto-Parametern (zwei Zeilen)
+%   \node[anchor=base west, text width=0.8\textwidth, align=left] 
+%   at ([xshift=\leftmarginwidth, yshift=\footerdistance]current page.south west) {%
+%     Befundbericht: \textbf{BDI-II} vom \textbf{07.02.2025} \\[0.5mm]
+%     Patient: \textbf{Müller, Klaus} (Geb.-Datum: \textbf{05.05.1999})
+%   };
+
+%   % Fußzeile rechts: Seitenzahlen
+%   \node[anchor=north west] 
+%   at ([yshift=\footerdistance]rightmarginlower) {%
+%     {Seite \thepage\ von \pageref{LastPage}}
+%   };
+%   % \node[anchor=north west] 
+%   % at ([yshift=15mm]rightmariginlower) {%
+%   %   {Seite \thepage\ von \pageref{LastPage}}
+%   % };
+% \end{tikzpicture}
+%\setlength{\textwidth}{\dimexpr\paperwidth-\extendedrightmargin-\leftmarginwidth\relax}
+\newcommand{\textblockwidth}{\dimexpr\textwidth\relax}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+%\begin{minipage}{\dimexpr\paperwidth-\rightmarginwidth-\leftmarginwidth-35mm\relax} % Breite dynamisch berechnen
+  \begin{minipage}{\textblockwidth}
+%\begin{minipage}{\dimexpr\textwidth-\extendedrightmargin-\leftmarginwidth-10mm\relax}
+%  \begin{minipage}{\dimexpr\paperwidth-\rightmarginwidth-\leftmarginwidth-10mm\relax}
+%\setlength{\textwidth}{\dimexpr\paperwidth-\extendedrightmargin-\leftmarginwidth\relax}
+
+
+  {\fontsize{12}{14}\selectfont
+  %Dies ist der Hauptinhalt des Dokuments. Der Bodyblock wurde korrekt eingerückt und seine Breite angepasst.
+  \begin{flushleft}
+    {\large Psychodiagnostischer Befundbericht} \\[2mm]
+    {\LARGE\textbf{Beck-Depressions-Inventar (BDI-II)}} \\[2mm]
+    \rule{\textwidth}{0.4pt}
+  \end{flushleft}\vspace{-0.5mm}
+  % Basisinformationen
+% Basisinformationen
+\begin{flushleft}
+{\small
+\begin{tabular}{@{}p{35mm}l@{}} % Erste Spalte ist 35mm breit
+\textbf{Patient:} & Müller, Klaus (Geb.-Datum: 05.05.1999) \\[2mm]
+\textbf{Patienten-ID:} & 12345 \\[2mm]
+\textbf{Geschlecht:} & männlich \\ [2mm]
+\textbf{Bildungsstand:} & Studium (4) \\[2mm]
+\textbf{Sonstiges:} & --leer-- \\[4mm]
+\end{tabular}
+
+\vspace{5mm} % Abstand zwischen Tabellen
+
+\begin{tabular}{@{}p{35mm}l@{}} % Gleiche Breite für die erste Spalte
+\textbf{Testdatum:} & 07.02.2025 \\[2mm]
+\textbf{Testleiter:} & Dipl. Psych. Ziervogel, André \\
+                     & (a.ziervogel@gemeinschaftspraxis-psychotherapie-erfurt.de)
+\end{tabular}
+}
+%\rule{\textwidth}{0.4pt}
+\end{flushleft} }
+\end{minipage}
+  
+\section{Testbeschreibung}\label{testbeschreibung}
+
+Das Beck-Depressions-Inventar, kurz BDI, ist ein validiertes,
+psychologisches Testverfahren, das die Schwere depressiver Symptome
+erfasst. In Form eines Fragebogens gibt der Patient selbst an, wie er
+sich im Verlauf der letzten Woche gefühlt hat. Es gibt keine
+Vergleichstichprobe und eignet sich nicht als
+Cut-Off-Screening-Instrument, wohl aber zur Verlaufsbeurteilung und
+differentialdiagnostischen Einordnung. Die hier verwendete zweite
+Version (BDI II) wurde 1996 veröffentlich und orientiert sich an den
+DSM-IV-Kriterien für major depression. Smith und Doe haben eine wichtige
+Studie veröffentlicht \cite{smith2023}.
+
+\section{Testdurchführung}\label{testdurchfuxfchrung}
+
+Herr M . hat das Beck-Depressions-Inventar ( BDI-II ) am 3. Januar 2025
+in elektronischer Form bearbeitet. Die Bearbeitungsdauer betrug 120:05
+Minuten (min:sec) .
+
+\section{Testergebnisse}\label{testergebnisse}
+
+\begin{longtable}[]{@{}lr@{}}
+\caption{Testergebnisse}\tabularnewline
+\toprule\noalign{}
+Kategorie & Score \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+Kategorie & Score \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Depression & 20 \\
+Anxiety & 15 \\
+Stress & 10 \\
+\end{longtable}
+
+\pandocbounded{\includegraphics[keepaspectratio]{diagnostik_files/figure-pdf/unnamed-chunk-3-1.pdf}}
+
+\bibliographystyle{apacite}
+\bibliography{reference}
+
+\end{document}

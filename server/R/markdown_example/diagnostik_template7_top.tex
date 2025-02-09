@@ -1,0 +1,121 @@
+\documentclass{article}
+
+\usepackage{fontspec} % Für XeLaTeX, um Systemschriftarten zu nutzen
+\setmainfont{Open Sans}
+\usepackage{lastpage} % Für die korrekte Seitenanzahl
+
+\usepackage{tikz}
+\usetikzlibrary{calc} % Für Koordinatenberechnungen
+
+% --- Fix für \tightlist ---
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% Variable für die Logobreite
+\newcommand{\logowidth}{40mm}
+\newcommand{\logoTextSpacing}{1mm}
+
+% Eine Box verwenden, um die Höhe und Breite der Grafik zu ermitteln
+\newsavebox{\logobox}
+\sbox{\logobox}{\includegraphics[width=\logowidth]{praxis_logo.pdf}}
+\newlength{\logoheight}
+\setlength{\logoheight}{\ht\logobox} % Höhe der Grafik
+\addtolength{\logoheight}{\dp\logobox} % Tiefe hinzufügen
+
+% Seitenstil deaktivieren
+\pagestyle{empty}
+
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay]
+  \coordinate (rightmariginupper) at ([xshift=-50mm]current page.north east);
+  \coordinate (rightmariginlower) at ([xshift=-50mm]current page.south east);
+  \draw[red, dashed, thick] (rightmariginupper) -- (rightmariginlower);
+
+  % Basis-Node mit Logo und Rahmen
+  \node[anchor=south west, draw=red, thick, inner sep=0mm] 
+    (logoNode) 
+    at ([xshift=0mm,yshift=-\logoheight -10mm]rightmariginupper) {%
+      \includegraphics[width=40mm]{praxis_logo.pdf} % Logo einfügen
+    };
+
+ % Textblock unter dem Logo
+%  \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+%  at ([yshift=-\logoTextSpacing]logoNode.south west) {%
+%    \begin{minipage}{40mm} % Breite des Blocks anpassen
+%      \centering
+%      {\fontsize{12}{14}\selectfont \textbf{Gemeinschaftspraxis}} \\[0mm]
+%      {\fontsize{12}{14}\selectfont \textbf{für Psychotherapie}}
+%    \end{minipage}
+%  };
+% Textblock unter dem Logo
+\node[anchor=north west, draw=red, thick, inner sep=0mm] 
+at ([yshift=-\logoTextSpacing]logoNode.south west) {%
+  \begin{minipage}{\logowidth} % Textblock ist genauso breit wie das Logo
+    \centering
+    \resizebox{\textwidth}{!}{Gemeinschaftspraxis} \\[0.5mm]
+    \resizebox{\textwidth}{!}{für Psychotherapie}
+  \end{minipage}
+};
+\node[anchor=north west, draw=red, thick, inner sep=0mm] 
+at ([yshift=-\logoTextSpacing - 10mm]logoNode.south west) {%
+  \begin{minipage}{\logowidth} % Textblock ist genauso breit wie das Logo
+    \centering
+    \resizebox{\textwidth}{!}{\textbf{Langen \& Ziervogel}}
+  \end{minipage}
+};
+
+% Zusätzliche Zeilen unter "Langen & Ziervogel"
+% \node[anchor=north west, draw=red, thick, inner sep=0mm] 
+% at ([yshift=-\logoTextSpacing - 20mm]logoNode.south west) {%
+%   \begin{minipage}{\logowidth} % Textblock ist genauso breit wie das Logo
+%     \centering
+%     {\fontsize{10}{12}\selectfont Schillerstraße 1 \\ 99096 Erfurt}
+%   \end{minipage}
+% };
+% Zusätzliche Zeilen unter "Langen & Ziervogel"
+\node[anchor=north west, draw=red, thick, inner sep=0mm] 
+at ([yshift=-\logoTextSpacing - 20mm]logoNode.south west) {%
+  \begin{minipage}{\logowidth}
+    {\fontsize{10}{12}\selectfont Schillerstraße 1 \\ 99096 Erfurt}
+  \end{minipage}
+};
+
+
+
+% Dynamische Fußzeile mit Quarto-Parametern
+% \node[anchor=base west] 
+% at ([xshift=10mm,yshift=15mm]current page.south west) {%
+%   \textbf{Befundbericht \textbf{$params.test_abrev$} vom \textbf{$params.datum$}} \\ 
+%   Pat. \textbf{$params.pat_surname$, $params.pat_name$} (Geb.-Datum: \textbf{$params.pat_gebdat$})
+% };
+
+% % Fußzeile rechts: Seitenzahlen
+\node[anchor=north west] 
+at ([yshift=15mm]rightmariginlower) {%
+  {Seite \thepage\ von \pageref{LastPage}}
+};
+
+  % Dynamische Fußzeile mit Quarto-Parametern (zwei Zeilen)
+  \node[anchor=base west, text width=0.8\textwidth, align=left] 
+  at ([xshift=10mm,yshift=15mm]current page.south west) {%
+    Befundbericht: \textbf{$params.test_abrev$} vom \textbf{$params.datum$} \\[0.5mm]
+    Patient: \textbf{$params.pat_surname$, $params.pat_name$} (Geb.-Datum: \textbf{$params.pat_gebdat$})
+  };
+
+
+%  % Dynamische Fußzeile mit Quarto-Parametern
+%  \node[anchor=north west] 
+%  at ([xshift=10mm,yshift=15mm]current page.south west) {%
+%    \textbf{Befundbericht \textbf{$params.test_abrev$} vom \textbf{$params.datum$}} \\\\\newline
+%    Pat. \textbf{$params.pat_surname$, $params.pat_name$} (Geb.-Datum: \textbf{$params.pat_gebdat$})
+%  };
+
+\end{tikzpicture}
+
+% Hier fügt Quarto den Inhalt aus "diagnostik.qmd" ein
+$body$
+
+\end{document}

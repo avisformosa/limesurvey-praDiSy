@@ -1,0 +1,70 @@
+\documentclass[12pt]{scrartcl}
+
+% --- Seitenlayout: DIN A4, 2.5 cm Ränder ---
+\usepackage[a4paper,margin=2.5cm]{geometry}
+
+% --- Zeichensatz & Fonts ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% Falls du OpenSans nicht über XeLaTeX/LuaLaTeX nutzen willst, 
+% verwende die LaTeX-Variante:
+\usepackage[default]{opensans}
+% Hinweis: Das Paket 'opensans' sollte in deiner TeX-Distribution installiert sein.
+% Wenn du mit xelatex/lualatex arbeitest, könntest du auch fontspec + \setmainfont{Open Sans} nutzen.
+
+% --- Logo / Grafiken ---
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+
+
+% --- Fancyhdr für Kopf-/Fußzeilen ---
+\usepackage{fancyhdr}
+% \usepackage{tightlist}
+\pagestyle{fancy}
+\fancyhead[L]{}  % linker Kopfbereich leer
+\fancyhead[R]{\includegraphics[width=5cm]{/Users/andre/Coding/Limesurvey/LimeSurvey/server/R/markdown_example/praxis_logo.pdf}} % Logo oben rechts
+\fancyfoot{}     % Fußzeile leer
+% Falls du Seitenzahlen unten rechts möchtest:
+% \fancyfoot[R]{\thepage}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+}
+
+
+% --- Hier beginnt das eigentliche Dokument ---
+\begin{document}
+
+% ==============================
+% T I T E L - B L O C K
+% ==============================
+$if(title)$
+  \noindent
+  {\huge $title$}\par
+  \vspace{2ex}
+$endif$
+
+$if(author)$
+  \noindent
+  {\large $author$}\par
+  \vspace{2ex}
+$endif$
+
+$if(date)$
+  \noindent
+  {\normalsize $date$}
+  \vspace{3ex}
+$endif$
+
+\begin{figure}[h!]
+    \includegraphics[width=8cm]{praxis_logo.pdf}
+\end{figure}
+    
+
+% ==============================
+% I N H A L T  (Quarto Body)
+% ==============================
+$body$
+
+\end{document}

@@ -1,0 +1,34 @@
+---
+title: "Report mit Parametern (Quarto)"
+author: "Dein Name"
+# 1) Variante A: Evaluierte Datumsausgabe direkt im Body, nicht im YAML
+date: " "  # z. B. leer lassen oder ein fixes Datum eintragen
+
+# 2) Code-Ausführung konfigurieren
+execute:
+  echo: true      # Code in Ausgabe anzeigen?
+  warning: true   
+  error: true     
+  message: true
+  # default-lang: R  # Falls du unbedingt R als Standardsprache für ALLE Chunks erzwingen willst
+
+# 3) Quarto-Parameter definieren
+params:
+  document_title: "Standard Titel"
+  sum_score: 0
+---
+
+## Kopfbereich
+
+Hier könnte ein Datum via Inline-R erscheinen:
+Heute ist: **`r format(Sys.Date(), '%d.%m.%Y')`**.
+
+---
+
+## Titel
+
+Der im Skript definierte Titel lautet: **`r params$document_title`**.
+
+## Ergebnisse
+
+Der berechnete Score beträgt: **`r params$sum_score`**.

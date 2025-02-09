@@ -1,0 +1,16 @@
+---
+title: "Ergebnisprotokoll Psychodiagnostik"
+output: pdf_document
+header-includes:
+  - \usepackage{graphicx}
+  - \usepackage{fontspec}
+  - \setmainfont{Open Sans}
+  - \setlength{\parindent}{0pt}
+geometry: margin=1in
+---
+
+```{r setup, include=FALSE}
+# Werte aus R-Skript vorbereiten
+survey_title <- "Beck-Depressions-Inventar (BDI II)"
+praxis_logo <- "img/logo.png"  # Pfad zum Praxislogo
+sum_score <- 42  # Beispielwert für den Summenwert

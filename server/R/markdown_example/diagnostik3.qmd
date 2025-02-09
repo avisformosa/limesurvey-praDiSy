@@ -1,0 +1,32 @@
+---
+title: "Blabla titel"
+author: "Balbla Blabistan"
+date: ""
+format:
+  pdf:
+    template: "diagnostik_template.tex"    # Unser LaTeX-Template (s.u.)
+    engine: xelatex                        # Wir wollen XeLaTeX nutzen
+execute:
+  echo: false
+  warning: false
+  error: false
+params:
+  patient_name: "Max Mustermann"
+  score_value: 99
+---
+
+# Beispiel
+
+Hallo, hier der Report für **`r params$patient_name`**  
+mit dem Score: **`r params$score_value`**.
+
+## Weitere Seiten
+
+Wenn wir genug Text einfügen, blättern wir auf Seite 2 und sehen dort nur das Logo in der Ecke, **ohne** Adressblock. Unten rechts auf **jeder Seite** steht dann „Seite x von Y“.
+
+
+```{r}
+# Test
+mydate <- Sys.Date()
+# mydate
+```

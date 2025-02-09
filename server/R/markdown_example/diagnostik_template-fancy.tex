@@ -1,0 +1,40 @@
+\documentclass{article}
+
+% 1) Seitenränder mit geometry festlegen
+\usepackage[a4paper,
+  left=25mm,      % Linker Rand: 25mm
+  top=25mm,       % Oberer Rand: 25mm
+  bottom=25mm,    % Unterer Rand: 25mm
+  right=50mm      % Rechter Rand: 50mm (5cm)
+]{geometry}
+
+% 2) Pakete für Kopf- und Fußzeilen
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% 3) Fix für \tightlist (Pandoc-Standard)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}%
+}
+
+% 4) Schriftart festlegen (Open Sans)
+\usepackage{fontspec}
+\setmainfont{Open Sans}
+
+% 5) Seitenstil mit fancyhdr definieren
+\pagestyle{fancy}
+\fancyhf{} % Alle Kopf- und Fußzeilenfelder leeren
+
+% 6) Rote Linie in der Fußzeile
+\renewcommand{\footrulewidth}{0.5pt}
+\renewcommand{\footrule}{\hbox to\paperwidth{\color{red}\leaders\hrule height \footrulewidth\hfill}}
+
+% 7) Seitenzahl unten rechts im rechten Rand platzieren
+\fancyfoot[R]{\thepage}
+
+\begin{document}
+
+% Hier fügt Quarto den Inhalt des .qmd-Dokuments ein
+$body$
+
+\end{document}

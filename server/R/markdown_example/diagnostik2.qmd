@@ -1,0 +1,35 @@
+---
+title: "Diagnostik-Report"
+author: "Dr. Mustermann"
+date: "08.01.2025"
+format:
+  pdf:
+    template: "Diagnostik_simple.tex"
+    # Wenn du lieber xelatex oder lualatex nutzen willst, um Font-Probleme zu vermeiden:
+    # engine: xelatex
+
+execute:
+  echo: false
+  warning: false
+  error: true
+  message: false
+
+params:
+  patient_name: "Standard Patient"
+  score_value: 42
+---
+
+# Beispiel
+
+Hallo, hier der Report für **`r params$patient_name`**  
+mit dem Score: **`r params$score_value`**.
+
+## Weiterer Abschnitt
+
+- Hier deine Diagramme, Tabellen, etc.
+
+```{r}
+# Test
+mydate <- Sys.Date()
+# mydate
+```

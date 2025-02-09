@@ -1,0 +1,70 @@
+\documentclass[12pt,oneside]{scrartcl}
+
+% 1) Seitenlayout: 5 cm Rand rechts
+\usepackage[a4paper,
+  left=20mm,
+  top=20mm,
+  bottom=20mm,
+  right=50mm]{geometry}
+
+% 2) Pakete für roten Balken & Logo-Platzierung
+\usepackage{eso-pic}   % Zum Platzieren von Objekten (Balken, Logo) auf jeder Seite
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+% Damit wir einen Rahmen um die Grafik zeichnen können:
+\usepackage{calc}      % (selten nötig, aber praktisch)
+\usepackage{fancyhdr}  % gleich für Seitenzahlen
+\usepackage{fontspec}  % XeLaTeX (wenn du Schriften setzen möchtest)
+
+% -------------------------
+% 2a) Roter Balken am rechten Rand
+% -------------------------
+\AddToShipoutPicture{
+  \AtPageLowerLeft{
+    \put(\LenToUnit{\dimexpr\paperwidth - 50mm},0){%
+      \color{red}\rule{50mm}{\LenToUnit\paperheight}%
+    }%
+  }
+}
+
+% -------------------------
+% 2b) Logo oben im Balken (mit definierbarem Offset)
+%     + schwarzer Rahmen ums Logo
+% -------------------------
+\AddToShipoutPicture{
+  \AtPageLowerLeft{
+    % Wir nehmen hier an, dass wir das Logo
+    %  - 5 mm vom linken Rand des roten Balkens platzieren
+    %  - 60 mm vom oberen Seitenrand nach unten versetzen 
+    %    (d.h. die untere Ecke des Logos ist 60 mm vom Page Top entfernt)
+    % Passe die Werte an, bis es schön aussieht.
+    \put(\LenToUnit{\dimexpr\paperwidth - 50mm + 5mm},
+         \LenToUnit{\dimexpr\paperheight - 60mm}){%
+      % Schwarzer Rahmen um das Bild: 
+      % Dazu reduzieren wir fboxsep auf 0, 
+      % damit der Rahmen direkt um die Grafik liegt.
+      \setlength{\fboxrule}{1pt}% Dicke des Rahmens
+      \setlength{\fboxsep}{0pt}% Abstand zwischen Rahmen und Grafik
+
+      \fbox{%
+        \includegraphics[width=30mm]{praxis_logo.pdf} % <-- Dein Logo hier!
+      }%
+    }
+  }
+}
+
+% 3) Seitenzahl unten rechts (außerhalb des roten Balkens)
+\pagestyle{fancy}
+\fancyhf{} % alles leeren
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Fußzeile nicht in den roten Balken schieben:
+\fancyfootoffset[RO,LE]{50mm}
+\fancyfoot[R]{\thepage}
+
+% 4) Hier kommt der Quarto-Content
+\begin{document}
+$body$
+\end{document}

@@ -1,7 +1,7 @@
 import requests
 import json
 
-# API-Konfiguration
+# API-Konfiguration Standard passwords
 LIMESURVEY_URL = "http://limesurvey.ddev.site/index.php/admin/remotecontrol"
 USERNAME = "admin"  # Admin-Benutzername
 PASSWORD = "admin"  # Passwort
